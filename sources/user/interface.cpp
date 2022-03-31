@@ -19,7 +19,7 @@ bool Interface::isValid(Point point) const {
 		&& 0 <= point.y && point.y < static_cast<int>(board_size);
 }
 
-std::optional<std::vector<Point>> Interface::readMoveImpl() {
+std::optional<std::vector<Point>> Interface::readMoveImpl() const {
 	std::string input;
 	in >> input;
 	std::vector<std::string> splitted = split(input, '-');
@@ -39,7 +39,7 @@ std::optional<std::vector<Point>> Interface::readMoveImpl() {
 Interface::Interface(std::istream& in, std::ostream& out, size_t board_size):
 	in(in), out(out), board_size(board_size) {}
 
-std::vector<Point> Interface::readMove() {
+std::vector<Point> Interface::readMove() const {
 	while (true) {
 		auto result = readMoveImpl();
 		if (result)
@@ -48,6 +48,15 @@ std::vector<Point> Interface::readMove() {
 	}
 }
 
-void Interface::writeIllegalMove() {
+void Interface::writeIllegalMove() const {
 	out << "Illegal move!\n";
+}
+
+
+void Interface::writeVictory() const {
+	out << "You winned!\n";
+}
+
+void Interface::writeDefeat() const {
+	out << "You lost!\n";
 }

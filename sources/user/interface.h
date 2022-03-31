@@ -18,10 +18,12 @@ private:
 private:
 	static std::vector<std::string> split(const std::string&, char);
 	bool isValid(Point) const;
-	std::optional<std::vector<Point>> readMoveImpl();
+	std::optional<std::vector<Point>> readMoveImpl() const;
 
 public:
 	Interface(std::istream& in, std::ostream& out, size_t board_size);
-	std::vector<Point> readMove();
-	void writeIllegalMove();
+	std::vector<Point> readMove() const;
+	void writeIllegalMove() const;
+	void writeVictory() const;
+	void writeDefeat() const;
 };
