@@ -17,7 +17,8 @@ std::vector<std::string> Interface::split(const std::string& text, char delimite
 size_t Interface::readNumber(size_t lower_bound, size_t upper_bound) const {
 	size_t result;
 	while (true) {
-		in >> result;
+		if (!(in >> result))
+			exit(0);
 		if (lower_bound <= result && result <= upper_bound)
 			break;
 		out << "Недопустимое значение!\n";
@@ -32,7 +33,8 @@ bool Interface::isValid(Point point) const {
 
 std::optional<std::vector<Point>> Interface::readMoveImpl() const {
 	std::string input;
-	in >> input;
+	if (!(in >> input))
+		exit(0);
 	std::vector<std::string> splitted = split(input, '-');
 	std::vector<Point> result;
 	for (std::string& item : splitted) {
@@ -69,19 +71,19 @@ std::vector<Point> Interface::readMove() const {
 		auto result = readMoveImpl();
 		if (result)
 			return *result;
-		out << "Invalid input!\n";
+		out << "Некорректный ввод!\n";
 	}
 }
 
 void Interface::writeIllegalMove() const {
-	out << "Illegal move!\n";
+	out << "Запрещенный ход!\n";
 }
 
 
 void Interface::writeVictory() const {
-	out << "You winned!\n";
+	out << "Поздравляем, вы выиграли!\n";
 }
 
 void Interface::writeDefeat() const {
-	out << "You lost!\n";
+	out << "Вы проиграли\n";
 }
