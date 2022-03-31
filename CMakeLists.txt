@@ -6,6 +6,7 @@ project(Checkers)
 set(SOURCES
 	sources/math/geometry.cpp
 	sources/math/utilities.cpp
+	sources/game/position.cpp
 )
 
 add_compile_options(-std=c++17 -Wall -Wextra)
