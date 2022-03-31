@@ -12,7 +12,8 @@
 const size_t BOARD_SIZE = 8;
 
 class Position {
-private:
+//private: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+public:
 	enum class Figure {
 		EMPTY,
 		WHITE_SIMPLE,
@@ -21,7 +22,8 @@ private:
 		BLACK_QUEEN,
 	};
 
-private:
+//private: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+public:
 	static const std::array<Vector, 4> DIRECTIONS;
 	static const int QUEEN_WEIGHT = 5;
 
@@ -47,6 +49,6 @@ public:
 	int mark() const;
 	size_t figuresNumber() const;
 
-	bool operator==(const Position&);
-	bool operator!=(const Position&);
+	bool operator==(const Position&) const;
+	bool operator!=(const Position&) const;
 };

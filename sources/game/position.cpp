@@ -213,3 +213,18 @@ size_t Position::figuresNumber() const {
 	}
 	return result;
 }
+
+
+bool Position::operator==(const Position& other) const {
+	for (size_t i = 0; i < BOARD_SIZE; ++i) {
+		for (size_t j = 0; j < BOARD_SIZE; ++j) {
+			if (board[i][j] != other.board[i][j])
+				return false;
+		}
+	}
+	return true;
+}
+
+bool Position::operator!=(const Position& other) const {
+	return !(*this == other);
+}

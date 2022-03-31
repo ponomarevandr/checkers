@@ -2,24 +2,21 @@
 #include <vector>
 
 #include "game/position.h"
+#include "game/sequential_mover.h"
 
 
 int main() {
 	Position pos;
-	pos.initialize();
-	for (size_t i = 0; i < 20; ++i) {
-		pos.show();
-		auto ways = pos.getAtomicMoves();
-		if (ways.size() == 0)
-			break;
-		pos = ways[0];
-		pos.swapSides();
-		ways = pos.getAtomicMoves();
-		if (ways.size() == 0)
-			break;
-		pos = ways[0];
-		pos.swapSides();
-		std::cout << pos.figuresNumber() << " " << pos.mark() << "\n";
+	pos.board[4][4] = Position::Figure::BLACK_SIMPLE;
+	pos.board[3][1] = Position::Figure::BLACK_SIMPLE;
+	pos.board[1][3] = Position::Figure::BLACK_SIMPLE;
+	pos.board[0][4] = Position::Figure::WHITE_QUEEN;
+	pos.show();
+	SequentialMover mover(pos);
+	mover.run();
+	auto result = mover.getMoves();
+	for (const Position& p : result) {
+		p.show();
 	}
 	return 0;
 }

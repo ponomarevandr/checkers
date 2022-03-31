@@ -7,6 +7,7 @@ set(SOURCES
 	sources/math/geometry.cpp
 	sources/math/utilities.cpp
 	sources/game/position.cpp
+	sources/game/sequential_mover.cpp
 )
 
 add_compile_options(-std=c++17 -Wall -Wextra)
