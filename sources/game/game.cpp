@@ -17,7 +17,8 @@ void Game::userIteration() {
 }
 
 void Game::machineIteration() {
-
+	Machine machine(position);
+	position = machine.getMove();
 }
 
 bool Game::isGameContinuing() const {

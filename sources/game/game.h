@@ -5,6 +5,7 @@
 
 #include "game/position.h"
 #include "game/sequential_mover.h"
+#include "game/machine.h"
 #include "user/interface.h"
 
 

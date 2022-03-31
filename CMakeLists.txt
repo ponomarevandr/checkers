@@ -9,6 +9,7 @@ set(SOURCES
 	sources/game/position.cpp
 	sources/game/sequential_mover.cpp
 	sources/game/game.cpp
+	sources/game/machine.cpp
 	sources/user/interface.cpp
 )
 
