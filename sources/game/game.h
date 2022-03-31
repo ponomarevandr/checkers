@@ -1,7 +1,7 @@
 #pragma once
 
-#include <iostream>
 #include <vector>
+#include <iostream>
 
 #include "game/position.h"
 #include "game/sequential_mover.h"
@@ -21,6 +21,6 @@ private:
 	bool isGameContinuing() const;
 
 public:
-	Game();
+	Game(std::istream&, std::ostream&);
 	void run();
 };

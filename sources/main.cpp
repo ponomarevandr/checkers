@@ -5,7 +5,7 @@
 
 
 int main() {
-	Game game;
+	Game game(std::cin, std::cout);
 	game.run();
 	return 0;
 }

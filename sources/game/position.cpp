@@ -14,14 +14,15 @@ bool Position::isWhiteCell(Point point) const {
 }
 
 void Position::clear() {
-	for (size_t i = 0; i < BOARD_SIZE; ++i) {
-		board[i].fill(Figure::EMPTY);
+	board.resize(Global::BOARD_SIZE);
+	for (size_t i = 0; i < Global::BOARD_SIZE; ++i) {
+		board[i].assign(Global::BOARD_SIZE, Figure::EMPTY);
 	}
 }
 
 bool Position::isValid(Point point) {
-	return point.x >= 0 && point.x < static_cast<int>(BOARD_SIZE)
-		&& point.y >= 0 && point.y < static_cast<int>(BOARD_SIZE);
+	return point.x >= 0 && point.x < static_cast<int>(Global::BOARD_SIZE)
+		&& point.y >= 0 && point.y < static_cast<int>(Global::BOARD_SIZE);
 }
 
 Position::Figure& Position::field(Point point) {
@@ -47,22 +48,22 @@ Position::Position() {
 
 void Position::initialize() {
 	clear();
-	for (size_t i = 0; i < BOARD_SIZE; ++i) {
-		for (size_t j = 0; j < BOARD_SIZE; ++j) {
+	for (size_t i = 0; i < Global::BOARD_SIZE; ++i) {
+		for (size_t j = 0; j < Global::BOARD_SIZE; ++j) {
 			if (isWhiteCell(Point(i, j)))
 				continue;
-			if (i <= 2)
+			if (i < Global::FIGURES_ROWS_NUMBER)
 				board[i][j] = Figure::WHITE_SIMPLE;
-			if (BOARD_SIZE - i - 1 <= 2)
+			if (Global::BOARD_SIZE - i - 1 < Global::FIGURES_ROWS_NUMBER)
 				board[i][j] = Figure::BLACK_SIMPLE;
 		}
 	}
 }
 
 void Position::show() const {
-	for (size_t i = BOARD_SIZE; i > 0; --i) {
+	for (size_t i = Global::BOARD_SIZE; i > 0; --i) {
 		std::cout << i << " ";
-		for (size_t j = 0; j < BOARD_SIZE; ++j) {
+		for (size_t j = 0; j < Global::BOARD_SIZE; ++j) {
 			if (isWhiteCell(Point(i - 1, j))) {
 				std::cout << "\033[1;47m";
 			} else {
@@ -89,15 +90,15 @@ void Position::show() const {
 		std::cout << "\033[0m\n";
 	}
 	std::cout << "  ";
-	for (size_t i = 0; i < BOARD_SIZE; ++i) {
+	for (size_t i = 0; i < Global::BOARD_SIZE; ++i) {
 		std::cout << static_cast<char>('a' + i);
 	}
 	std::cout << "\n";
 }
 
 void Position::swapSides() {
-	for (size_t i = 0; i < BOARD_SIZE; ++i) {
-		for (size_t j = 0; j < BOARD_SIZE; ++j) {
+	for (size_t i = 0; i < Global::BOARD_SIZE; ++i) {
+		for (size_t j = 0; j < Global::BOARD_SIZE; ++j) {
 			switch (board[i][j]) {
 			case Figure::WHITE_SIMPLE:
 				board[i][j] = Figure::BLACK_SIMPLE;
@@ -116,8 +117,8 @@ void Position::swapSides() {
 			}
 		}
 	}
-	for (size_t i = 0; 2 * i < BOARD_SIZE; ++i) {
-		std::swap(board[i], board[BOARD_SIZE - 1 - i]);
+	for (size_t i = 0; 2 * i < Global::BOARD_SIZE; ++i) {
+		std::swap(board[i], board[Global::BOARD_SIZE - 1 - i]);
 	}
 	orientation = 1 - orientation;
 }
@@ -156,15 +157,15 @@ std::optional<Position> Position::applyAtomicMove(Point from, Point to) const {
 	}
 	result.field(to) = result.field(from);
 	result.field(from) = Figure::EMPTY;
-	if (to.y == static_cast<int>(BOARD_SIZE) - 1)
+	if (to.y == static_cast<int>(Global::BOARD_SIZE) - 1)
 		result.field(to) = Figure::WHITE_QUEEN;
 	return result;
 }
 
 std::vector<Position> Position::getAtomicMoves() const {
 	std::vector<Position> result;
-	for (size_t i = 0; i < BOARD_SIZE; ++i) {
-		for (size_t j = 0; j < BOARD_SIZE; ++j) {
+	for (size_t i = 0; i < Global::BOARD_SIZE; ++i) {
+		for (size_t j = 0; j < Global::BOARD_SIZE; ++j) {
 			Point from(i, j);
 			for (size_t k = 0; k < DIRECTIONS.size(); ++k) {
 				Point to = from + DIRECTIONS[k];
@@ -182,8 +183,8 @@ std::vector<Position> Position::getAtomicMoves() const {
 
 int Position::mark() const {
 	int result = 0;
-	for (size_t i = 0; i < BOARD_SIZE; ++i) {
-		for (size_t j = 0; j < BOARD_SIZE; ++j) {
+	for (size_t i = 0; i < Global::BOARD_SIZE; ++i) {
+		for (size_t j = 0; j < Global::BOARD_SIZE; ++j) {
 			switch (board[i][j]) {
 			case Figure::WHITE_SIMPLE:
 				result += 1;
@@ -207,8 +208,8 @@ int Position::mark() const {
 
 size_t Position::figuresNumber() const {
 	size_t result = 0;
-	for (size_t i = 0; i < BOARD_SIZE; ++i) {
-		for (size_t j = 0; j < BOARD_SIZE; ++j) {
+	for (size_t i = 0; i < Global::BOARD_SIZE; ++i) {
+		for (size_t j = 0; j < Global::BOARD_SIZE; ++j) {
 			if (board[i][j] != Figure::EMPTY)
 				++result;
 		}
@@ -218,8 +219,8 @@ size_t Position::figuresNumber() const {
 
 
 bool Position::operator==(const Position& other) const {
-	for (size_t i = 0; i < BOARD_SIZE; ++i) {
-		for (size_t j = 0; j < BOARD_SIZE; ++j) {
+	for (size_t i = 0; i < Global::BOARD_SIZE; ++i) {
+		for (size_t j = 0; j < Global::BOARD_SIZE; ++j) {
 			if (board[i][j] != other.board[i][j])
 				return false;
 		}

@@ -11,6 +11,7 @@ set(SOURCES
 	sources/game/game.cpp
 	sources/game/machine.cpp
 	sources/user/interface.cpp
+	sources/user/settings.cpp
 )
 
 add_compile_options(-std=c++17 -Wall -Wextra)

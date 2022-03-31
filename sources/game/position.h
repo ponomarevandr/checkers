@@ -1,15 +1,13 @@
 #pragma once
 
-#include <array>
 #include <vector>
 #include <optional>
 #include <algorithm>
 #include <iostream>
 
 #include "math/geometry.h"
+#include "user/settings.h"
 
-
-const size_t BOARD_SIZE = 8;
 
 class Position {
 private:
@@ -25,7 +23,7 @@ private:
 	static const std::array<Vector, 4> DIRECTIONS;
 	static const int QUEEN_WEIGHT = 5;
 
-	std::array<std::array<Figure, BOARD_SIZE>, BOARD_SIZE> board;
+	std::vector<std::vector<Figure>> board;
 	int orientation = 0;
 
 private:

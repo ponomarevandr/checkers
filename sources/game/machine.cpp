@@ -2,7 +2,7 @@
 
 
 int Machine::mark(const Position& position, size_t depth) const {
-	if (depth == MAX_DEPTH)
+	if (depth == Global::DIFFICULTY_LEVEL)
 		return position.mark();
 	SequentialMover mover(position);
 	mover.run();

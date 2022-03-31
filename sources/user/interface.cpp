@@ -14,9 +14,20 @@ std::vector<std::string> Interface::split(const std::string& text, char delimite
 	return result;
 }
 
+size_t Interface::readNumber(size_t lower_bound, size_t upper_bound) const {
+	size_t result;
+	while (true) {
+		in >> result;
+		if (lower_bound <= result && result <= upper_bound)
+			break;
+		out << "Недопустимое значение!\n";
+	}
+	return result;
+}
+
 bool Interface::isValid(Point point) const {
-	return 0 <= point.x && point.x < static_cast<int>(board_size)
-		&& 0 <= point.y && point.y < static_cast<int>(board_size);
+	return 0 <= point.x && point.x < static_cast<int>(Global::BOARD_SIZE)
+		&& 0 <= point.y && point.y < static_cast<int>(Global::BOARD_SIZE);
 }
 
 std::optional<std::vector<Point>> Interface::readMoveImpl() const {
@@ -36,8 +47,22 @@ std::optional<std::vector<Point>> Interface::readMoveImpl() const {
 }
 
 
-Interface::Interface(std::istream& in, std::ostream& out, size_t board_size):
-	in(in), out(out), board_size(board_size) {}
+Interface::Interface(std::istream& in, std::ostream& out): in(in), out(out) {}
+
+void Interface::writeGreeting() const {
+	out << "=================================================================\n";
+	out << "                              Шашки\n";
+	out << "=================================================================\n";
+	out << "Приветствуем!\n";
+}
+
+void Interface::readSettings() const {
+	out << "Введите размер игровой доски (от 1 до 3):\n";
+	Global::FIGURES_ROWS_NUMBER = readNumber(1, 3);
+	Global::BOARD_SIZE = 2 + 2 * Global::FIGURES_ROWS_NUMBER;
+	out << "Введите уровень сложности (от 1 до 10):\n";
+	Global::DIFFICULTY_LEVEL = readNumber(1, 10);
+}
 
 std::vector<Point> Interface::readMove() const {
 	while (true) {

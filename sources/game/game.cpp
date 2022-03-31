@@ -29,11 +29,12 @@ bool Game::isGameContinuing() const {
 }
 
 
-Game::Game(): interface(std::cin, std::cout, BOARD_SIZE) {
-	position.initialize();
-}
+Game::Game(std::istream& in, std::ostream& out): interface(in, out) {}
 
 void Game::run() {
+	interface.writeGreeting();
+	interface.readSettings();
+	position.initialize();
 	while (isGameContinuing()) {
 		if (!is_user_turn) {
 			position.swapSides();
