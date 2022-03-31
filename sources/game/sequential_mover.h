@@ -14,7 +14,7 @@ private:
 	std::vector<Position> finishes;
 
 private:
-	static bool onlyMinFiguresNumber(std::vector<Position>&);
+	static bool withFiguresNumber(std::vector<Position>& position, size_t number);
 
 public:
 	SequentialMover(const Position& start);

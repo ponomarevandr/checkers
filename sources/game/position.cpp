@@ -41,6 +41,18 @@ bool Position::isBlack(Point point) const {
 	return field(point) == Figure::BLACK_SIMPLE || field(point) == Figure::BLACK_QUEEN;
 }
 
+void Position::getAtomicMovesImpl(Point from, std::vector<Position>& result) const {
+	for (size_t k = 0; k < DIRECTIONS.size(); ++k) {
+		Point to = from + DIRECTIONS[k];
+		while (isValid(to)) {
+			auto attempt = applyAtomicMove(from, to);
+			if (attempt)
+				result.push_back(std::move(*attempt));
+			to += DIRECTIONS[k];
+		}
+	}
+}
+
 
 Position::Position() {
 	clear();
@@ -159,23 +171,19 @@ std::optional<Position> Position::applyAtomicMove(Point from, Point to) const {
 	result.field(from) = Figure::EMPTY;
 	if (to.y == static_cast<int>(Global::BOARD_SIZE) - 1)
 		result.field(to) = Figure::WHITE_QUEEN;
+	result.latest_moved = to;
 	return result;
 }
 
-std::vector<Position> Position::getAtomicMoves() const {
+std::vector<Position> Position::getAtomicMoves(bool of_latest) const {
 	std::vector<Position> result;
+	if (of_latest) {
+		getAtomicMovesImpl(latest_moved, result);
+		return result;
+	}
 	for (size_t i = 0; i < Global::BOARD_SIZE; ++i) {
 		for (size_t j = 0; j < Global::BOARD_SIZE; ++j) {
-			Point from(i, j);
-			for (size_t k = 0; k < DIRECTIONS.size(); ++k) {
-				Point to = from + DIRECTIONS[k];
-				while (isValid(to)) {
-					auto attempt = applyAtomicMove(from, to);
-					if (attempt)
-						result.push_back(std::move(*attempt));
-					to += DIRECTIONS[k];
-				}
-			}
+			getAtomicMovesImpl(Point(i, j), result);
 		}
 	}
 	return result;

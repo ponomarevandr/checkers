@@ -25,6 +25,7 @@ private:
 
 	std::vector<std::vector<Figure>> board;
 	int orientation = 0;
+	Point latest_moved;
 
 private:
 	bool isWhiteCell(Point) const;
@@ -34,6 +35,7 @@ private:
 	const Figure& field(Point) const;
 	bool isWhite(Point) const;
 	bool isBlack(Point) const;
+	void getAtomicMovesImpl(Point, std::vector<Position>&) const;
 
 public:
 	Position();
@@ -41,7 +43,7 @@ public:
 	void show() const;
 	void swapSides();
 	std::optional<Position> applyAtomicMove(Point from, Point to) const;
-	std::vector<Position> getAtomicMoves() const;
+	std::vector<Position> getAtomicMoves(bool of_latest = false) const;
 	int mark() const;
 	size_t figuresNumber() const;
 

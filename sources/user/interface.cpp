@@ -60,8 +60,8 @@ void Interface::readSettings() const {
 	out << "Введите размер игровой доски (от 1 до 3):\n";
 	Global::FIGURES_ROWS_NUMBER = readNumber(1, 3);
 	Global::BOARD_SIZE = 2 + 2 * Global::FIGURES_ROWS_NUMBER;
-	out << "Введите уровень сложности (от 1 до 10):\n";
-	Global::DIFFICULTY_LEVEL = readNumber(1, 10);
+	out << "Введите уровень сложности (от 1 до 5):\n";
+	Global::DIFFICULTY_LEVEL = readNumber(1, 5);
 }
 
 std::vector<Point> Interface::readMove() const {

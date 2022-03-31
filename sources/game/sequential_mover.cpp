@@ -1,21 +1,17 @@
 #include "game/sequential_mover.h"
 
 
-bool SequentialMover::onlyMinFiguresNumber(std::vector<Position>& positions) {
-	if (positions.empty())
-		return true;
-	size_t size_before = positions.size();
-	size_t min_figures = positions[0].figuresNumber();
-	for (const Position& position : positions) {
-		min_figures = std::min(min_figures, position.figuresNumber());
-	}
+bool SequentialMover::withFiguresNumber(std::vector<Position>& positions, size_t number) {
 	std::vector<Position> tmp = std::move(positions);
 	positions.clear();
 	for (const Position& position : tmp) {
-		if (position.figuresNumber() == min_figures)
+		if (position.figuresNumber() == number)
 			positions.push_back(std::move(position));
 	}
-	return positions.size() == size_before;
+	if (!positions.empty())
+		return true;
+	positions = std::move(tmp);
+	return false;
 }
 
 
@@ -23,15 +19,15 @@ SequentialMover::SequentialMover(const Position& start): start(start) {}
 
 void SequentialMover::run() {
 	finishes = start.getAtomicMoves();
-	if (onlyMinFiguresNumber(finishes))
+	if (!withFiguresNumber(finishes, start.figuresNumber() - 1))
 		return;
 	std::vector<Position> intermediate = std::move(finishes);
 	finishes.clear();
 	while (!intermediate.empty()) {
 		Position position = std::move(intermediate.back());
 		intermediate.pop_back();
-		std::vector<Position> next = position.getAtomicMoves();
-		if (onlyMinFiguresNumber(next)) {
+		std::vector<Position> next = position.getAtomicMoves(true);
+		if (!withFiguresNumber(next, position.figuresNumber() - 1)) {
 			finishes.push_back(std::move(position));
 			continue;
 		}

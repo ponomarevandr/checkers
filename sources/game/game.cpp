@@ -35,18 +35,19 @@ void Game::run() {
 	interface.writeGreeting();
 	interface.readSettings();
 	position.initialize();
+	position.show();
 	while (isGameContinuing()) {
+		if (is_user_turn) {
+			userIteration();
+		} else {
+			machineIteration();
+		}
 		if (!is_user_turn) {
 			position.swapSides();
 		}
 		position.show();
 		if (!is_user_turn) {
 			position.swapSides();
-		}
-		if (is_user_turn) {
-			userIteration();
-		} else {
-			machineIteration();
 		}
 		position.swapSides();
 		is_user_turn = !is_user_turn;
