@@ -1,6 +1,7 @@
 #pragma once
 
 #include <math.h>
+#include <iostream>
 
 #include "math/utilities.h"
 
@@ -32,8 +33,18 @@ struct Vector {
 
 Point operator+(const Point&, const Vector&);
 Point operator-(const Point&, const Vector&);
+Vector operator-(const Point&, const Point&);
 
 Vector operator+(const Vector&, const Vector&);
 Vector operator-(const Vector&, const Vector&);
 Vector operator*(const Vector&, int);
 Vector operator/(const Vector&, int);
+
+bool operator==(const Point&, const Point&);
+bool operator!=(const Point&, const Point&);
+
+bool operator==(const Vector&, const Vector&);
+bool operator!=(const Vector&, const Vector&);
+
+std::istream& operator>>(std::istream&, Point&);
+std::ostream& operator<<(std::ostream&, const Point&);

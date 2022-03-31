@@ -65,6 +65,11 @@ Point operator-(const Point& point, const Vector& vector) {
 	return result;
 }
 
+Vector operator-(const Point& end, const Point& begin) {
+	return Vector(end.x - begin.x, end.y - begin.y);
+}
+
+
 
 Vector operator+(const Vector& first, const Vector& second) {
 	Vector result = first;
@@ -88,4 +93,32 @@ Vector operator/(const Vector& vector, int coefficient) {
 	Vector result = vector;
 	result /= coefficient;
 	return result;
+}
+
+
+bool operator==(const Point& first, const Point& second) {
+	return first.x == second.x && first.y == second.y;
+}
+
+bool operator!=(const Point& first, const Point& second) {
+	return !(first == second);
+}
+
+bool operator==(const Vector& first, const Vector& second) {
+	return first.x == second.x && first.y == second.y;
+}
+
+bool operator!=(const Vector& first, const Vector& second) {
+	return !(first == second);
+}
+
+
+std::istream& operator>>(std::istream& in, Point& point) {
+	in >> point.x >> point.y;
+	return in;
+}
+
+std::ostream& operator<<(std::ostream& out, const Point& point) {
+	out << point.x << " " << point.y;
+	return out;
 }

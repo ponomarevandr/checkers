@@ -1,6 +1,8 @@
 #pragma once
 
 #include <array>
+#include <optional>
+#include <algorithm>
 #include <iostream>
 
 #include "math/geometry.h"
@@ -20,13 +22,20 @@ private:
 
 private:
 	std::array<std::array<Figure, BOARD_SIZE>, BOARD_SIZE> board;
+	int orientation = 0;
 
 private:
+	bool isWhiteCell(Point) const;
 	void clear();
-	bool isWhite(Point point) const;
+	static bool isValid(Point);
+	Figure& field(Point);
+	bool isWhite(Point);
+	bool isBlack(Point);
 
 public:
 	Position();
 	void initialize();
-	void show();
+	void show() const;
+	void swapSides();
+	std::optional<Position> move(Point from, Point to);
 };
