@@ -1,6 +1,7 @@
 #pragma once
 
 #include <array>
+#include <vector>
 #include <optional>
 #include <algorithm>
 #include <iostream>
@@ -21,6 +22,9 @@ private:
 	};
 
 private:
+	static const std::array<Vector, 4> DIRECTIONS;
+	static const int QUEEN_WEIGHT = 5;
+
 	std::array<std::array<Figure, BOARD_SIZE>, BOARD_SIZE> board;
 	int orientation = 0;
 
@@ -29,13 +33,20 @@ private:
 	void clear();
 	static bool isValid(Point);
 	Figure& field(Point);
-	bool isWhite(Point);
-	bool isBlack(Point);
+	const Figure& field(Point) const;
+	bool isWhite(Point) const;
+	bool isBlack(Point) const;
 
 public:
 	Position();
 	void initialize();
 	void show() const;
 	void swapSides();
-	std::optional<Position> move(Point from, Point to);
+	std::optional<Position> applyAtomicMove(Point from, Point to) const;
+	std::vector<Position> getAtomicMoves() const;
+	int mark() const;
+	size_t figuresNumber() const;
+
+	bool operator==(const Position&);
+	bool operator!=(const Position&);
 };

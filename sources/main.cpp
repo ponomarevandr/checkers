@@ -1,5 +1,5 @@
 #include <iostream>
-#include <optional>
+#include <vector>
 
 #include "game/position.h"
 
@@ -7,17 +7,19 @@
 int main() {
 	Position pos;
 	pos.initialize();
-	while (true) {
+	for (size_t i = 0; i < 20; ++i) {
 		pos.show();
-		Point from, to;
-		std::cin >> from >> to;
-		auto result = pos.move(from, to);
-		if (!result) {
-			std::cout << "Invalid move!\n";
-			continue;
-		}
-		pos = *result;
+		auto ways = pos.getAtomicMoves();
+		if (ways.size() == 0)
+			break;
+		pos = ways[0];
 		pos.swapSides();
+		ways = pos.getAtomicMoves();
+		if (ways.size() == 0)
+			break;
+		pos = ways[0];
+		pos.swapSides();
+		std::cout << pos.figuresNumber() << " " << pos.mark() << "\n";
 	}
 	return 0;
 }
