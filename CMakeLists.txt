@@ -4,7 +4,8 @@ cmake_minimum_required(VERSION 3.0)
 project(Checkers)
 
 set(SOURCES
-
+	sources/math/geometry.cpp
+	sources/math/utilities.cpp
 )
 
 add_compile_options(-std=c++17 -Wall -Wextra)
