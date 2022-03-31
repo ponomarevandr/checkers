@@ -87,3 +87,7 @@ void Interface::writeVictory() const {
 void Interface::writeDefeat() const {
 	out << "Вы проиграли\n";
 }
+
+void Interface::writeDraw() const {
+	out << "Ничья повторением позиции\n";
+}

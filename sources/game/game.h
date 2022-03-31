@@ -14,11 +14,13 @@ private:
 	Position position;
 	Interface interface;
 	bool is_user_turn = true;
+	std::vector<Position> history;
 
 private:
 	void userIteration();
 	void machineIteration();
 	bool isGameContinuing() const;
+	size_t getTimesInHistory(const Position&) const;
 
 public:
 	Game(std::istream&, std::ostream&);

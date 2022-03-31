@@ -29,4 +29,5 @@ public:
 	void writeIllegalMove() const;
 	void writeVictory() const;
 	void writeDefeat() const;
+	void writeDraw() const;
 };

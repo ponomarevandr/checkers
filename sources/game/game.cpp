@@ -28,6 +28,15 @@ bool Game::isGameContinuing() const {
 	return !next.empty();
 }
 
+size_t Game::getTimesInHistory(const Position& position) const {
+	size_t counter = 0;
+	for (const Position& other : history) {
+		if (position == other)
+			++counter;
+	}
+	return counter;
+}
+
 
 Game::Game(std::istream& in, std::ostream& out): interface(in, out) {}
 
@@ -46,6 +55,11 @@ void Game::run() {
 			position.swapSides();
 		}
 		position.show();
+		history.push_back(position);
+		if (getTimesInHistory(position) >= 3) {
+			interface.writeDraw();
+			return;
+		}
 		if (!is_user_turn) {
 			position.swapSides();
 		}
