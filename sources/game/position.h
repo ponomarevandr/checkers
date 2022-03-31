@@ -12,8 +12,7 @@
 const size_t BOARD_SIZE = 8;
 
 class Position {
-//private: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-public:
+private:
 	enum class Figure {
 		EMPTY,
 		WHITE_SIMPLE,
@@ -22,8 +21,7 @@ public:
 		BLACK_QUEEN,
 	};
 
-//private: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-public:
+private:
 	static const std::array<Vector, 4> DIRECTIONS;
 	static const int QUEEN_WEIGHT = 5;
 

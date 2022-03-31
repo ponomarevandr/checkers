@@ -8,6 +8,8 @@ set(SOURCES
 	sources/math/utilities.cpp
 	sources/game/position.cpp
 	sources/game/sequential_mover.cpp
+	sources/game/game.cpp
+	sources/user/interface.cpp
 )
 
 add_compile_options(-std=c++17 -Wall -Wextra)

@@ -1,8 +1,10 @@
 #pragma once
 
 #include <vector>
+#include <optional>
 #include <algorithm>
 
+#include "math/geometry.h"
 #include "game/position.h"
 
 
@@ -18,5 +20,5 @@ public:
 	SequentialMover(const Position& start);
 	void run();
 	std::vector<Position> getMoves();
-	bool isPossible(const Position& finish) const;
+	std::optional<Position> getMoveFromInput(const std::vector<Point>&) const;
 };

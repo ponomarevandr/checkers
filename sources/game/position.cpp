@@ -123,6 +123,8 @@ void Position::swapSides() {
 }
 
 std::optional<Position> Position::applyAtomicMove(Point from, Point to) const {
+	if (!isValid(from) || !isValid(to))
+		return std::nullopt;
 	if (!isWhite(from))
 		return std::nullopt;
 	if (field(to) != Figure::EMPTY)

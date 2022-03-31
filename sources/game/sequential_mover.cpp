@@ -45,10 +45,17 @@ std::vector<Position> SequentialMover::getMoves() {
 	return std::move(finishes);
 }
 
-bool SequentialMover::isPossible(const Position& position) const {
-	for (const Position& candidate : finishes) {
-		if (position == candidate)
-			return true;
+std::optional<Position> SequentialMover::getMoveFromInput(const std::vector<Point>& input) const {
+	Position current = start;
+	for (size_t i = 0; i + 1 < input.size(); ++i) {
+		auto result = current.applyAtomicMove(input[i], input[i + 1]);
+		if (!result)
+			return std::nullopt;
+		current = std::move(*result);
 	}
-	return false;
+	for (const Position& candidate : finishes) {
+		if (current == candidate)
+			return current;
+	}
+	return std::nullopt;
 }
